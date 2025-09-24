@@ -4,7 +4,7 @@ version = "1.0.0"
 authors = ["FaceWise Team"]
 
 [dependencies]
-AptosFramework = { git = "https://github.com/aptos-labs/aptos-core.git", subdir = "aptos-move/framework/aptos-framework/", rev = "main" }
+AptosFramework = { git = "https://github.com/aptos-labs/aptos-core.git", subdir = "aptos-move/framework/aptos-framework/", rev = "mainnet" }
 
 [dev-addresses]
 facewise_pay = "0xb25025a71fcbcf78f78fe757f45f5503a17a1e13de2576671f32681d8c43a37e"
