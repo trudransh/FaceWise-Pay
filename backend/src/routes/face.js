@@ -4,13 +4,9 @@ const faceService = require('../services/faceService');
 
 const router = express.Router();
 
-// Configure multer for photo uploads (in-memory storage)
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: {
-    fileSize: 10 * 1024 * 1024, // 10MB limit
-    files: 1
-  },
+  limits: { fileSize: 10 * 1024 * 1024, files: 1 },
   fileFilter: (req, file, cb) => {
     if (file.mimetype.startsWith('image/')) {
       cb(null, true);
@@ -20,11 +16,6 @@ const upload = multer({
   }
 });
 
-/**
- * POST /api/face/enroll
- * Enroll a face for a wallet address
- * Expects: multipart/form-data with 'photo' file and 'walletAddress' field
- */
 router.post('/enroll', upload.single('photo'), async (req, res) => {
   try {
     const { walletAddress } = req.body;
@@ -43,8 +34,8 @@ router.post('/enroll', upload.single('photo'), async (req, res) => {
       });
     }
 
-    console.log(`Enrolling face for wallet: ${walletAddress}`);
-    console.log(`Photo: ${req.file.mimetype}, ${req.file.size} bytes`);
+    console.log(`📸 Enrolling face for wallet: ${walletAddress}`);
+    console.log(`📸 Photo: ${req.file.mimetype}, ${req.file.size} bytes`);
 
     const result = await faceService.enrollFace(
       walletAddress,
@@ -59,7 +50,6 @@ router.post('/enroll', upload.single('photo'), async (req, res) => {
         ? 'Face enrolled successfully' 
         : `Enrollment failed: ${result.error}`
     });
-
   } catch (error) {
     console.error('Face enrollment error:', error);
     res.status(500).json({
@@ -70,11 +60,6 @@ router.post('/enroll', upload.single('photo'), async (req, res) => {
   }
 });
 
-/**
- * POST /api/face/recognize
- * Recognize a face and return associated wallet address
- * Expects: multipart/form-data with 'photo' file
- */
 router.post('/recognize', upload.single('photo'), async (req, res) => {
   try {
     if (!req.file) {
@@ -84,8 +69,8 @@ router.post('/recognize', upload.single('photo'), async (req, res) => {
       });
     }
 
-    console.log(`Recognizing face...`);
-    console.log(`Photo: ${req.file.mimetype}, ${req.file.size} bytes`);
+    console.log(`🔍 Recognizing face...`);
+    console.log(`📸 Photo: ${req.file.mimetype}, ${req.file.size} bytes`);
 
     const result = await faceService.recognizeFace(
       req.file.buffer,
@@ -98,7 +83,6 @@ router.post('/recognize', upload.single('photo'), async (req, res) => {
         ? (result.data.recognized ? 'Face recognized successfully' : 'No matching face found')
         : `Recognition failed: ${result.error}`
     });
-
   } catch (error) {
     console.error('Face recognition error:', error);
     res.status(500).json({
@@ -109,10 +93,6 @@ router.post('/recognize', upload.single('photo'), async (req, res) => {
   }
 });
 
-/**
- * GET /api/face/enrolled
- * Get list of enrolled wallet addresses (for testing)
- */
 router.get('/enrolled', (req, res) => {
   try {
     const enrolled = faceService.getEnrolledWallets();
@@ -134,10 +114,6 @@ router.get('/enrolled', (req, res) => {
   }
 });
 
-/**
- * POST /api/face/check-enrollment
- * Check if a specific wallet is enrolled
- */
 router.post('/check-enrollment', (req, res) => {
   try {
     const { walletAddress } = req.body;
@@ -167,10 +143,6 @@ router.post('/check-enrollment', (req, res) => {
   }
 });
 
-/**
- * DELETE /api/face/clear
- * Clear all enrollments (for testing)
- */
 router.delete('/clear', (req, res) => {
   try {
     faceService.clearEnrollments();
@@ -188,7 +160,7 @@ router.delete('/clear', (req, res) => {
   }
 });
 
-// Error handling middleware for multer
+// Multer error handling
 router.use((error, req, res, next) => {
   if (error instanceof multer.MulterError) {
     if (error.code === 'LIMIT_FILE_SIZE') {
