@@ -1,0 +1,4 @@
+  node_modules
+  .env
+  target/  # Aptos Move builds
+  *.log
