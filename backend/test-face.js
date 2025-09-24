@@ -2,7 +2,7 @@ require('dotenv').config();
 const faceService = require('./src/services/faceService');
 
 async function testFaceService() {
-  console.log('🧪 Testing Face Service...\n');
+  console.log('Testing Face Service...\n');
   
   try {
     // Test 1: Service initialization
@@ -18,11 +18,11 @@ async function testFaceService() {
     // For now, we can't test actual face recognition without a photo
     // But we can verify the service is configured correctly
     
-    console.log('\n✅ Face service configuration looks good!');
-    console.log('📝 Note: Actual face recognition will be tested via API endpoints');
+    console.log('\nFace service configuration looks good!');
+    console.log('Note: Actual face recognition will be tested via API endpoints');
     
   } catch (error) {
-    console.error('❌ Face service test failed:', error.message);
+    console.error('Face service test failed:', error.message);
   }
 }
 

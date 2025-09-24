@@ -2,7 +2,7 @@ require('dotenv').config();
 const aptosService = require('./src/services/aptosService');
 
 async function testAptos() {
-  console.log('🧪 Testing Aptos Service...\n');
+  console.log('Testing Aptos Service...\n');
   
   try {
     console.log('1. Service Status:');
@@ -20,7 +20,7 @@ async function testAptos() {
       const balance = await aptosService.getBalance(adminAddress);
       console.log('Admin balance:', balance);
     } else {
-      console.log('❌ Admin account not initialized');
+      console.log('Admin account not initialized');
     }
     console.log('');
     
@@ -28,10 +28,10 @@ async function testAptos() {
     const newBalance = await aptosService.getBalance(wallet.address);
     console.log('New wallet balance:', newBalance);
     
-    console.log('\n✅ Aptos service tests completed!');
+    console.log('\nAptos service tests completed!');
     
   } catch (error) {
-    console.error('❌ Test failed:', error.message);
+    console.error('Test failed:', error.message);
   }
 }
 
